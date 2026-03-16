@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40" fill="none">
+  <defs>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a882ff"/>
+      <stop offset="100%" stop-color="#00d4ff"/>
+    </linearGradient>
+    <linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#c4a8ff"/>
+      <stop offset="100%" stop-color="#7aeaff"/>
+    </linearGradient>
+  </defs>
+  <!-- Shield outline -->
+  <path d="M20 3L6 9v9c0 8.5 6 16.2 14 18 8-1.8 14-9.5 14-18V9L20 3z" stroke="url(#shieldGrad)" stroke-width="2" fill="none" stroke-linejoin="round"/>
+  <!-- Wave lines inside shield -->
+  <path d="M11 16c2-3 4-3 6 0s4 3 6 0s4 3 6 0" stroke="url(#waveGrad)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <path d="M11 21c2-3 4-3 6 0s4 3 6 0s4 3 6 0" stroke="url(#waveGrad)" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.6"/>
+  <path d="M13 26c1.5-2.5 3-2.5 4.5 0s3 2.5 4.5 0s3 2.5 4.5 0" stroke="url(#waveGrad)" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.35"/>
+</svg>
