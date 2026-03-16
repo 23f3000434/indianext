@@ -1,1075 +1,1192 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SaveWaves — AI-Powered Cyber Threat Intelligence</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,400;1,600;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #08060f;
-    --surface: rgba(255,255,255,0.03);
-    --surface-hover: rgba(255,255,255,0.06);
-    --border: rgba(255,255,255,0.06);
-    --border-hover: rgba(168,130,255,0.3);
-    --purple-primary: #a882ff;
-    --purple-light: #c4a8ff;
-    --purple-dark: #7c5cbf;
-    --violet: #8b5cf6;
-    --indigo: #6366f1;
-    --blue: #818cf8;
-    --cyan: #22d3ee;
-    --rose: #f472b6;
-    --red: #fb7185;
-    --amber: #fbbf24;
-    --text: #f0eef5;
-    --text-secondary: #a09bb5;
-    --text-muted: #6b6580;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: 'Inter', -apple-system, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    overflow: hidden;
-    height: 100vh;
-    width: 100vw;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  /* === VIDEO BACKGROUND === */
-  .video-bg {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    z-index: 0;
-    overflow: hidden;
-  }
-
-  .video-bg video {
-    width: 100%; height: 100%;
-    object-fit: cover;
-  }
-
-  .video-overlay {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    z-index: 1;
-    background: rgba(8, 6, 15, 0.40);
-    pointer-events: none;
-  }
-
-  /* === PRESENTATION === */
-  .presentation {
-    position: relative;
-    z-index: 10;
-    width: 100vw;
-    height: 100vh;
-  }
-
-  .slide {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 80px 100px;
-    opacity: 0;
-    transform: scale(0.98) translateY(16px);
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.15s ease;
-    pointer-events: none;
-    visibility: hidden;
-  }
-
-  .slide.active {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-    pointer-events: auto;
-    visibility: visible;
-  }
-
-  /* === TOP BAR === */
-  .top-bar {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 24px 40px;
-    background: linear-gradient(180deg, rgba(8,6,15,0.95) 0%, transparent 100%);
-  }
-
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 700;
-    font-size: 18px;
-    letter-spacing: -0.02em;
-  }
-
-  .logo-mark {
-    width: 32px; height: 32px;
-    border-radius: 8px;
-    background: linear-gradient(135deg, var(--purple-primary), var(--indigo));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .logo-mark svg {
-    width: 18px; height: 18px;
-    fill: none;
-    stroke: white;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .slide-indicator {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    color: var(--text-muted);
-    letter-spacing: 1px;
-  }
-
-  /* === NAV BAR === */
-  .nav-bar {
-    position: fixed;
-    bottom: 32px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 100;
-    display: flex;
-    gap: 6px;
-    padding: 8px 16px;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid var(--border);
-    border-radius: 100px;
-    backdrop-filter: blur(20px);
-  }
-
-  .nav-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--text-muted);
-    opacity: 0.4;
-    cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .nav-dot.active {
-    background: var(--purple-primary);
-    opacity: 1;
-    width: 24px;
-    border-radius: 4px;
-    box-shadow: 0 0 16px rgba(168,130,255,0.4);
-  }
-
-  /* === TYPOGRAPHY === */
-  .tag {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    color: var(--purple-primary);
-    margin-bottom: 28px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .tag::before {
-    content: '';
-    width: 20px;
-    height: 1px;
-    background: var(--purple-primary);
-  }
-
-  h1 {
-    font-size: 60px;
-    font-weight: 800;
-    line-height: 1.1;
-    letter-spacing: -0.03em;
-    margin-bottom: 24px;
-    text-align: center;
-    max-width: 950px;
-    text-shadow: 0 2px 24px rgba(0,0,0,0.7);
-  }
-
-  h1 .accent {
-    background: linear-gradient(135deg, var(--purple-primary), var(--blue), var(--cyan));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  h1 .italic {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-weight: 700;
-  }
-
-  .subtitle {
-    font-size: 19px;
-    font-weight: 400;
-    color: var(--text-secondary);
-    line-height: 1.7;
-    text-align: center;
-    max-width: 620px;
-    margin-bottom: 40px;
-    text-shadow: 0 2px 16px rgba(0,0,0,0.6);
-  }
-
-  /* === PILLS === */
-  .pills {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .pill {
-    padding: 8px 20px;
-    border-radius: 100px;
-    font-size: 13px;
-    font-weight: 500;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    color: var(--text-secondary);
-    transition: all 0.3s;
-  }
-
-  .pill:hover {
-    border-color: var(--border-hover);
-    color: var(--purple-light);
-  }
-
-  /* === STAT CARDS === */
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    width: 100%;
-    max-width: 1000px;
-  }
-
-  .stat-card {
-    background: rgba(8,6,15,0.8);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 32px 24px;
-    text-align: center;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    backdrop-filter: blur(16px);
-  }
-
-  .stat-card:hover {
-    border-color: var(--border-hover);
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px rgba(168,130,255,0.06);
-  }
-
-  .stat-value {
-    font-size: 48px;
-    font-weight: 900;
-    letter-spacing: -0.03em;
-    line-height: 1;
-    margin-bottom: 10px;
-  }
-
-  .stat-value.purple { color: var(--purple-primary); }
-  .stat-value.rose { color: var(--rose); }
-  .stat-value.cyan { color: var(--cyan); }
-  .stat-value.amber { color: var(--amber); }
-
-  .stat-label {
-    font-size: 13px;
-    color: var(--text-muted);
-    line-height: 1.5;
-  }
-
-  .stat-label strong { color: var(--text-secondary); }
-
-  /* === SPLIT VIEW === */
-  .split {
-    display: flex;
-    gap: 24px;
-    width: 100%;
-    max-width: 1000px;
-  }
-
-  .split-panel {
-    flex: 1;
-    border-radius: 20px;
-    padding: 32px;
-    border: 1px solid;
-    backdrop-filter: blur(16px);
-  }
-
-  .split-panel.danger {
-    background: rgba(20,10,15,0.8);
-    border-color: rgba(251,113,133,0.15);
-  }
-
-  .split-panel.success {
-    background: rgba(15,10,25,0.8);
-    border-color: rgba(168,130,255,0.15);
-  }
-
-  .panel-header {
-    font-size: 13px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 20px;
-  }
-
-  .panel-header.danger { color: var(--red); }
-  .panel-header.success { color: var(--purple-primary); }
-
-  .panel-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-
-  .panel-list li {
-    font-size: 15px;
-    color: var(--text-secondary);
-    line-height: 1.6;
-    display: flex;
-    gap: 10px;
-  }
-
-  .panel-list .marker {
-    flex-shrink: 0;
-    margin-top: 3px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    font-weight: 700;
-    opacity: 0.5;
-  }
-
-  /* === MODULE CARDS === */
-  .modules-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    width: 100%;
-    max-width: 1050px;
-  }
-
-  .module-card {
-    background: rgba(8,6,15,0.55);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 28px 22px;
-    text-align: center;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    cursor: default;
-    backdrop-filter: blur(16px);
-  }
-
-  .module-card:hover {
-    border-color: var(--border-hover);
-    transform: translateY(-6px);
-    box-shadow: 0 24px 48px rgba(168,130,255,0.08);
-  }
-
-  .module-icon {
-    width: 48px; height: 48px;
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 16px;
-  }
-
-  .module-icon svg {
-    width: 24px; height: 24px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.8;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .module-icon.i1 { background: rgba(168,130,255,0.12); color: var(--purple-primary); }
-  .module-icon.i2 { background: rgba(99,102,241,0.12); color: var(--indigo); }
-  .module-icon.i3 { background: rgba(34,211,238,0.12); color: var(--cyan); }
-  .module-icon.i4 { background: rgba(244,114,182,0.12); color: var(--rose); }
-
-  .module-title {
-    font-size: 15px;
-    font-weight: 700;
-    margin-bottom: 8px;
-    letter-spacing: -0.01em;
-  }
-
-  .module-desc {
-    font-size: 13px;
-    color: var(--text-muted);
-    line-height: 1.6;
-  }
-
-  /* === ARCHITECTURE FLOW === */
-  .arch-pipeline {
-    display: flex;
-    align-items: center;
-    gap: 0;
-    width: 100%;
-    max-width: 1100px;
-    justify-content: center;
-  }
-
-  .arch-step {
-    background: rgba(8,6,15,0.55);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 18px 22px;
-    text-align: center;
-    min-width: 150px;
-    transition: all 0.3s;
-    backdrop-filter: blur(16px);
-  }
-
-  .arch-step:hover {
-    border-color: var(--border-hover);
-  }
-
-  .arch-step .step-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--purple-primary);
-    margin-bottom: 6px;
-    letter-spacing: 1px;
-  }
-
-  .arch-step .step-name {
-    font-size: 13px;
-    font-weight: 600;
-    margin-bottom: 4px;
-  }
-
-  .arch-step .step-detail {
-    font-size: 11px;
-    color: var(--text-muted);
-  }
-
-  .arch-connector {
-    flex-shrink: 0;
-    width: 48px;
-    height: 1px;
-    background: linear-gradient(90deg, var(--border), var(--purple-primary), var(--border));
-    position: relative;
-    z-index: 2;
-  }
-
-  .arch-connector::after {
-    content: '';
-    position: absolute;
-    right: -3px;
-    top: -3px;
-    width: 7px; height: 7px;
-    border-top: 1.5px solid var(--purple-primary);
-    border-right: 1.5px solid var(--purple-primary);
-    transform: rotate(45deg);
-  }
-
-  /* Tech stack */
-  .tech-row {
-    display: flex;
-    gap: 14px;
-    margin-top: 28px;
-    max-width: 1000px;
-    width: 100%;
-  }
-
-  .tech-chip {
-    flex: 1;
-    background: rgba(8,6,15,0.8);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 14px 16px;
-    text-align: center;
-    backdrop-filter: blur(16px);
-  }
-
-  .tech-chip .tc-name {
-    font-size: 13px;
-    font-weight: 600;
-    margin-bottom: 2px;
-  }
-
-  .tech-chip .tc-role {
-    font-size: 11px;
-    color: var(--text-muted);
-  }
-
-  /* === FEATURE LIST === */
-  .features {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    max-width: 750px;
-    width: 100%;
-  }
-
-  .feature-row {
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    padding: 16px 20px;
-    background: rgba(8,6,15,0.55);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    transition: all 0.3s;
-    backdrop-filter: blur(16px);
-  }
-
-  .feature-row:hover {
-    border-color: var(--border-hover);
-  }
-
-  .feature-marker {
-    flex-shrink: 0;
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--purple-primary);
-    margin-top: 9px;
-  }
-
-  .feature-text {
-    font-size: 16px;
-    color: var(--text-secondary);
-    line-height: 1.6;
-  }
-
-  .feature-text strong {
-    color: var(--text);
-    font-weight: 600;
-  }
-
-  /* === IMPACT GRID === */
-  .impact-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    width: 100%;
-    max-width: 950px;
-  }
-
-  .impact-card {
-    background: rgba(8,6,15,0.55);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 36px 28px;
-    text-align: center;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    backdrop-filter: blur(16px);
-  }
-
-  .impact-card:hover {
-    border-color: var(--border-hover);
-    transform: translateY(-4px);
-  }
-
-  .impact-badge {
-    width: 52px; height: 52px;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 16px;
-  }
-
-  .impact-badge svg {
-    width: 24px; height: 24px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.8;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .impact-badge.b1 { background: rgba(99,102,241,0.12); color: var(--indigo); }
-  .impact-badge.b2 { background: rgba(168,130,255,0.12); color: var(--purple-primary); }
-  .impact-badge.b3 { background: rgba(34,211,238,0.12); color: var(--cyan); }
-
-  .impact-title {
-    font-size: 16px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    letter-spacing: -0.01em;
-  }
-
-  .impact-desc {
-    font-size: 13px;
-    color: var(--text-muted);
-    line-height: 1.7;
-  }
-
-  .closing-statement {
-    margin-top: 32px;
-    font-size: 17px;
-    color: var(--text-secondary);
-    text-align: center;
-    max-width: 700px;
-    line-height: 1.7;
-  }
-
-  .closing-statement .hl-red { color: var(--red); font-weight: 600; }
-  .closing-statement .hl-purple { color: var(--purple-primary); font-weight: 600; }
-
-  /* === FINAL SLIDE === */
-  .final-heading {
-    font-size: 80px;
-    font-weight: 900;
-    letter-spacing: -0.04em;
-    background: linear-gradient(135deg, var(--purple-primary), var(--blue), var(--cyan));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 16px;
-  }
-
-  .final-box {
-    background: rgba(8,6,15,0.55);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 32px 56px;
-    text-align: center;
-    backdrop-filter: blur(20px);
-    margin-top: 24px;
-  }
-
-  .final-box .fb-name {
-    font-size: 22px;
-    font-weight: 700;
-    margin-bottom: 4px;
-    letter-spacing: -0.02em;
-  }
-
-  .final-box .fb-sub {
-    font-size: 14px;
-    color: var(--text-muted);
-    margin-bottom: 18px;
-  }
-
-  .event-line {
-    margin-top: 28px;
-    font-size: 13px;
-    color: var(--text-muted);
-    letter-spacing: 1px;
-  }
-
-  /* === KEYBOARD HINT === */
-  .hint {
-    position: fixed;
-    bottom: 72px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 100;
-    font-size: 11px;
-    color: var(--text-muted);
-    opacity: 0.5;
-    letter-spacing: 0.5px;
-    transition: opacity 0.3s;
-  }
-
-  .hint kbd {
-    padding: 2px 7px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-  }
-
-  /* === RESPONSIVE === */
-  @media (max-width: 1024px) {
-    .slide { padding: 60px 40px; }
-    h1 { font-size: 42px; }
-    .stats-grid, .modules-grid { grid-template-columns: repeat(2, 1fr); }
-    .arch-pipeline { flex-wrap: wrap; gap: 12px; }
-    .arch-connector { display: none; }
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SaveWaves — AI-Powered Cyber Threat Intelligence</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,400;1,600;1,700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #08060f;
+      --surface: rgba(255, 255, 255, 0.03);
+      --surface-hover: rgba(255, 255, 255, 0.06);
+      --border: rgba(255, 255, 255, 0.06);
+      --border-hover: rgba(168, 130, 255, 0.3);
+      --purple-primary: #a882ff;
+      --purple-light: #c4a8ff;
+      --purple-dark: #7c5cbf;
+      --violet: #8b5cf6;
+      --indigo: #6366f1;
+      --blue: #818cf8;
+      --cyan: #22d3ee;
+      --rose: #f472b6;
+      --red: #fb7185;
+      --amber: #fbbf24;
+      --text: #f0eef5;
+      --text-secondary: #a09bb5;
+      --text-muted: #6b6580;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* === VIDEO BACKGROUND === */
+    .video-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .video-bg video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .video-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      background: rgba(8, 6, 15, 0.40);
+      pointer-events: none;
+    }
+
+    /* === PRESENTATION === */
+    .presentation {
+      position: relative;
+      z-index: 10;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 80px 100px;
+      opacity: 0;
+      transform: scale(0.98) translateY(16px);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.15s ease;
+      pointer-events: none;
+      visibility: hidden;
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+      pointer-events: auto;
+      visibility: visible;
+    }
+
+    /* === TOP BAR === */
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 40px;
+      background: linear-gradient(180deg, rgba(8, 6, 15, 0.95) 0%, transparent 100%);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+    }
+
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--purple-primary), var(--indigo));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-mark svg {
+      width: 18px;
+      height: 18px;
+      fill: none;
+      stroke: white;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .slide-indicator {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+
+    /* === NAV BAR === */
+    .nav-bar {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: flex;
+      gap: 6px;
+      padding: 8px 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      backdrop-filter: blur(20px);
+    }
+
+    .nav-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      opacity: 0.4;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .nav-dot.active {
+      background: var(--purple-primary);
+      opacity: 1;
+      width: 24px;
+      border-radius: 4px;
+      box-shadow: 0 0 16px rgba(168, 130, 255, 0.4);
+    }
+
+    /* === TYPOGRAPHY === */
+    .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--purple-primary);
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .tag::before {
+      content: '';
+      width: 20px;
+      height: 1px;
+      background: var(--purple-primary);
+    }
+
+    h1 {
+      font-size: 60px;
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+      text-align: center;
+      max-width: 950px;
+      text-shadow: 0 2px 24px rgba(0, 0, 0, 0.7);
+    }
+
+    h1 .accent {
+      background: linear-gradient(135deg, var(--purple-primary), var(--blue), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    h1 .italic {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      font-size: 19px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      text-align: center;
+      max-width: 620px;
+      margin-bottom: 40px;
+      text-shadow: 0 2px 16px rgba(0, 0, 0, 0.6);
+    }
+
+    /* === PILLS === */
+    .pills {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .pill {
+      padding: 8px 20px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 500;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      transition: all 0.3s;
+    }
+
+    .pill:hover {
+      border-color: var(--border-hover);
+      color: var(--purple-light);
+    }
+
+    /* === STAT CARDS === */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      width: 100%;
+      max-width: 1000px;
+    }
+
+    .stat-card {
+      background: rgba(8, 6, 15, 0.8);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px 24px;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      backdrop-filter: blur(16px);
+    }
+
+    .stat-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(168, 130, 255, 0.06);
+    }
+
+    .stat-value {
+      font-size: 48px;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .stat-value.purple {
+      color: var(--purple-primary);
+    }
+
+    .stat-value.rose {
+      color: var(--rose);
+    }
+
+    .stat-value.cyan {
+      color: var(--cyan);
+    }
+
+    .stat-value.amber {
+      color: var(--amber);
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .stat-label strong {
+      color: var(--text-secondary);
+    }
+
+    /* === SPLIT VIEW === */
+    .split {
+      display: flex;
+      gap: 24px;
+      width: 100%;
+      max-width: 1000px;
+    }
+
+    .split-panel {
+      flex: 1;
+      border-radius: 20px;
+      padding: 32px;
+      border: 1px solid;
+      backdrop-filter: blur(16px);
+    }
+
+    .split-panel.danger {
+      background: rgba(20, 10, 15, 0.8);
+      border-color: rgba(251, 113, 133, 0.15);
+    }
+
+    .split-panel.success {
+      background: rgba(15, 10, 25, 0.8);
+      border-color: rgba(168, 130, 255, 0.15);
+    }
+
+    .panel-header {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+    }
+
+    .panel-header.danger {
+      color: var(--red);
+    }
+
+    .panel-header.success {
+      color: var(--purple-primary);
+    }
+
+    .panel-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .panel-list li {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      display: flex;
+      gap: 10px;
+    }
+
+    .panel-list .marker {
+      flex-shrink: 0;
+      margin-top: 3px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      opacity: 0.5;
+    }
+
+    /* === MODULE CARDS === */
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      width: 100%;
+      max-width: 1050px;
+    }
+
+    .module-card {
+      background: rgba(8, 6, 15, 0.55);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px 22px;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: default;
+      backdrop-filter: blur(16px);
+    }
+
+    .module-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-6px);
+      box-shadow: 0 24px 48px rgba(168, 130, 255, 0.08);
+    }
+
+    .module-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+    }
+
+    .module-icon svg {
+      width: 24px;
+      height: 24px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .module-icon.i1 {
+      background: rgba(168, 130, 255, 0.12);
+      color: var(--purple-primary);
+    }
+
+    .module-icon.i2 {
+      background: rgba(99, 102, 241, 0.12);
+      color: var(--indigo);
+    }
+
+    .module-icon.i3 {
+      background: rgba(34, 211, 238, 0.12);
+      color: var(--cyan);
+    }
+
+    .module-icon.i4 {
+      background: rgba(244, 114, 182, 0.12);
+      color: var(--rose);
+    }
+
+    .module-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+
+    .module-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* === ARCHITECTURE FLOW === */
+    .arch-pipeline {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      width: 100%;
+      max-width: 1100px;
+      justify-content: center;
+    }
+
+    .arch-step {
+      background: rgba(8, 6, 15, 0.55);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px 22px;
+      text-align: center;
+      min-width: 150px;
+      transition: all 0.3s;
+      backdrop-filter: blur(16px);
+    }
+
+    .arch-step:hover {
+      border-color: var(--border-hover);
+    }
+
+    .arch-step .step-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--purple-primary);
+      margin-bottom: 6px;
+      letter-spacing: 1px;
+    }
+
+    .arch-step .step-name {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .arch-step .step-detail {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .arch-connector {
+      flex-shrink: 0;
+      width: 48px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--border), var(--purple-primary), var(--border));
+      position: relative;
+      z-index: 2;
+    }
+
+    .arch-connector::after {
+      content: '';
+      position: absolute;
+      right: -3px;
+      top: -3px;
+      width: 7px;
+      height: 7px;
+      border-top: 1.5px solid var(--purple-primary);
+      border-right: 1.5px solid var(--purple-primary);
+      transform: rotate(45deg);
+    }
+
+    /* Tech stack */
+    .tech-row {
+      display: flex;
+      gap: 14px;
+      margin-top: 28px;
+      max-width: 1000px;
+      width: 100%;
+    }
+
+    .tech-chip {
+      flex: 1;
+      background: rgba(8, 6, 15, 0.8);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      text-align: center;
+      backdrop-filter: blur(16px);
+    }
+
+    .tech-chip .tc-name {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .tech-chip .tc-role {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* === FEATURE LIST === */
+    .features {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 750px;
+      width: 100%;
+    }
+
+    .feature-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 16px 20px;
+      background: rgba(8, 6, 15, 0.55);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      transition: all 0.3s;
+      backdrop-filter: blur(16px);
+    }
+
+    .feature-row:hover {
+      border-color: var(--border-hover);
+    }
+
+    .feature-marker {
+      flex-shrink: 0;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--purple-primary);
+      margin-top: 9px;
+    }
+
+    .feature-text {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .feature-text strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* === IMPACT GRID === */
+    .impact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      width: 100%;
+      max-width: 950px;
+    }
+
+    .impact-card {
+      background: rgba(8, 6, 15, 0.55);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 28px;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      backdrop-filter: blur(16px);
+    }
+
+    .impact-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-4px);
+    }
+
+    .impact-badge {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+    }
+
+    .impact-badge svg {
+      width: 24px;
+      height: 24px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .impact-badge.b1 {
+      background: rgba(99, 102, 241, 0.12);
+      color: var(--indigo);
+    }
+
+    .impact-badge.b2 {
+      background: rgba(168, 130, 255, 0.12);
+      color: var(--purple-primary);
+    }
+
+    .impact-badge.b3 {
+      background: rgba(34, 211, 238, 0.12);
+      color: var(--cyan);
+    }
+
+    .impact-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    .impact-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .closing-statement {
+      margin-top: 32px;
+      font-size: 17px;
+      color: var(--text-secondary);
+      text-align: center;
+      max-width: 700px;
+      line-height: 1.7;
+    }
+
+    .closing-statement .hl-red {
+      color: var(--red);
+      font-weight: 600;
+    }
+
+    .closing-statement .hl-purple {
+      color: var(--purple-primary);
+      font-weight: 600;
+    }
+
+    /* === FINAL SLIDE === */
+    .final-heading {
+      font-size: 80px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      background: linear-gradient(135deg, var(--purple-primary), var(--blue), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 16px;
+    }
+
+    .final-box {
+      background: rgba(8, 6, 15, 0.55);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px 56px;
+      text-align: center;
+      backdrop-filter: blur(20px);
+      margin-top: 24px;
+    }
+
+    .final-box .fb-name {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      letter-spacing: -0.02em;
+    }
+
+    .final-box .fb-sub {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
+
+    .event-line {
+      margin-top: 28px;
+      font-size: 13px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+
+    /* === KEYBOARD HINT === */
+    .hint {
+      position: fixed;
+      bottom: 72px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      font-size: 11px;
+      color: var(--text-muted);
+      opacity: 0.5;
+      letter-spacing: 0.5px;
+      transition: opacity 0.3s;
+    }
+
+    .hint kbd {
+      padding: 2px 7px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 1024px) {
+      .slide {
+        padding: 60px 40px;
+      }
+
+      h1 {
+        font-size: 42px;
+      }
+
+      .stats-grid,
+      .modules-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .arch-pipeline {
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .arch-connector {
+        display: none;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- Video Background -->
-<div class="video-bg">
-  <video autoplay muted loop playsinline>
-    <source src="bg-video.mp4" type="video/mp4">
-  </video>
-</div>
-<div class="video-overlay"></div>
-
-<!-- Top Bar -->
-<div class="top-bar">
-  <div class="logo">
-    <div class="logo-mark">
-      <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-    </div>
-    SAVEWAVES
+  <!-- Video Background -->
+  <div class="video-bg">
+    <video autoplay muted loop playsinline>
+      <source src="bg-video.mp4" type="video/mp4">
+    </video>
   </div>
-  <div class="slide-indicator">
-    <span id="currentSlide">01</span> / <span id="totalSlides">08</span>
-  </div>
-</div>
+  <div class="video-overlay"></div>
 
-<!-- Slides -->
-<div class="presentation">
-
-  <!-- 1: TITLE -->
-  <div class="slide active" data-slide="0">
-    <div class="tag">IndiaNext Hackathon 2026</div>
-    <h1>
-      <span class="accent">SaveWaves.</span><br>
-      <span class="italic">Intelligent Threat Defense.</span>
-    </h1>
-    <div class="subtitle">
-      A smart cyber defense platform that detects, analyzes, and explains
-      emerging threats — so you know <em>exactly</em> what's happening and why.
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        </svg>
+      </div>
+      SaveWaves
     </div>
-    <div class="pills">
-      <div class="pill">Phishing Detection</div>
-      <div class="pill">URL Analysis</div>
-      <div class="pill">Explainable AI</div>
-      <div class="pill">Real-Time Scoring</div>
+    <div class="slide-indicator">
+      <span id="currentSlide">01</span> / <span id="totalSlides">08</span>
     </div>
   </div>
 
-  <!-- 2: THE PROBLEM -->
-  <div class="slide" data-slide="1">
-    <div class="tag">The Problem</div>
-    <h1 style="font-size: 46px;">
-      Cyber Attacks Are<br><span class="accent italic">Outpacing Human Defenses</span>
-    </h1>
-    <div class="subtitle" style="margin-bottom: 48px;">
-      AI-generated attacks are growing exponentially. Legacy tools can't explain what they find.
-    </div>
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-value rose">3.4B</div>
-        <div class="stat-label">Phishing emails sent <strong>every day</strong> globally</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value purple">91%</div>
-        <div class="stat-label">Of cyberattacks start with <strong>phishing</strong></div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value cyan">19 Cr</div>
-        <div class="stat-label">Avg breach cost in <strong>India, 2025</strong></div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value amber">4,151%</div>
-        <div class="stat-label">Rise in AI phishing since <strong>ChatGPT</strong></div>
-      </div>
-    </div>
-  </div>
+  <!-- Slides -->
+  <div class="presentation">
 
-  <!-- 3: THE GAP -->
-  <div class="slide" data-slide="2">
-    <div class="tag">The Gap</div>
-    <h1 style="font-size: 44px;">
-      Tools Flag Threats.<br>They Don't <span class="accent italic">Explain</span> Them.
-    </h1>
-    <div style="height: 32px;"></div>
-    <div class="split">
-      <div class="split-panel danger">
-        <div class="panel-header danger">Today's Reality</div>
-        <ul class="panel-list">
-          <li><span class="marker">--</span>Black-box outputs: "Spam detected" — but <strong>why?</strong></li>
-          <li><span class="marker">--</span>45% of security alerts are <strong>false positives</strong></li>
-          <li><span class="marker">--</span>No context on urgency or recommended next steps</li>
-          <li><span class="marker">--</span>Non-technical users left <strong>confused, vulnerable</strong></li>
-          <li><span class="marker">--</span>AI-crafted phishing bypasses pattern matching</li>
-        </ul>
+    <!-- 1: TITLE -->
+    <div class="slide active" data-slide="0">
+      <div class="tag">IndiaNext Hackathon 2026</div>
+      <h1>
+        <span class="accent">SaveWaves.</span><br>
+        <span class="italic">Fight AI with AI.</span>
+      </h1>
+      <div class="subtitle">
+        Attackers already have AI. Defenders don't.<br>
+        We're fixing that asymmetry — with a platform that detects, explains, and defends.
       </div>
-      <div class="split-panel success">
-        <div class="panel-header success">What's Needed</div>
-        <ul class="panel-list">
-          <li><span class="marker">+</span><strong>Transparent</strong> detection with clear reasoning</li>
-          <li><span class="marker">+</span><strong>Context-aware</strong> risk scoring per threat</li>
-          <li><span class="marker">+</span><strong>Actionable</strong> recommendations, not just labels</li>
-          <li><span class="marker">+</span><strong>Visual</strong> explanations anyone can understand</li>
-          <li><span class="marker">+</span><strong>Multi-threat</strong> analysis in one platform</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- 4: OUR SOLUTION -->
-  <div class="slide" data-slide="3">
-    <div class="tag">Our Solution</div>
-    <h1 style="font-size: 46px;">
-      <span class="accent">SaveWaves</span> — <span class="italic">See Through the Threat</span>
-    </h1>
-    <div class="subtitle">
-      Detect, explain, and defend against modern cyber threats — all from one intelligent platform.
-    </div>
-    <div class="modules-grid">
-      <div class="module-card">
-        <div class="module-icon i1">
-          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        </div>
-        <div class="module-title">Threat Input</div>
-        <div class="module-desc">Paste emails, URLs, or messages for instant analysis</div>
-      </div>
-      <div class="module-card">
-        <div class="module-icon i2">
-          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-        </div>
-        <div class="module-title">AI Detection</div>
-        <div class="module-desc">ML models analyze text, URL features, and behavioral signals</div>
-      </div>
-      <div class="module-card">
-        <div class="module-icon i3">
-          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
-        </div>
-        <div class="module-title">Explainability</div>
-        <div class="module-desc">SHAP-powered reasoning for every flagged threat</div>
-      </div>
-      <div class="module-card">
-        <div class="module-icon i4">
-          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        </div>
-        <div class="module-title">Smart Response</div>
-        <div class="module-desc">Severity-scored actions and defense strategies</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 5: ARCHITECTURE -->
-  <div class="slide" data-slide="4">
-    <div class="tag">Architecture</div>
-    <h1 style="font-size: 42px;">
-      System <span class="accent italic">Architecture</span>
-    </h1>
-    <div class="subtitle" style="margin-bottom: 44px;">
-      Modular pipeline — each component handles one responsibility.
-    </div>
-    <div class="arch-pipeline">
-      <div class="arch-step">
-        <div class="step-num">01</div>
-        <div class="step-name">Input Module</div>
-        <div class="step-detail">Email / URL / Text</div>
-      </div>
-      <div class="arch-connector"></div>
-      <div class="arch-step">
-        <div class="step-num">02</div>
-        <div class="step-name">Feature Extraction</div>
-        <div class="step-detail">NLP + URL Analysis</div>
-      </div>
-      <div class="arch-connector"></div>
-      <div class="arch-step">
-        <div class="step-num">03</div>
-        <div class="step-name">ML Detection</div>
-        <div class="step-detail">Classification Engine</div>
-      </div>
-      <div class="arch-connector"></div>
-      <div class="arch-step">
-        <div class="step-num">04</div>
-        <div class="step-name">Explainability</div>
-        <div class="step-detail">SHAP / LIME</div>
-      </div>
-      <div class="arch-connector"></div>
-      <div class="arch-step">
-        <div class="step-num">05</div>
-        <div class="step-name">Dashboard</div>
-        <div class="step-detail">Score + Actions</div>
-      </div>
-    </div>
-    <div class="tech-row">
-      <div class="tech-chip">
-        <div class="tc-name">Python + FastAPI</div>
-        <div class="tc-role">Backend & ML Pipeline</div>
-      </div>
-      <div class="tech-chip">
-        <div class="tc-name">React + Vite</div>
-        <div class="tc-role">Interactive Dashboard</div>
-      </div>
-      <div class="tech-chip">
-        <div class="tc-name">scikit-learn / TF</div>
-        <div class="tc-role">ML Models</div>
-      </div>
-      <div class="tech-chip">
-        <div class="tc-name">SHAP / LIME</div>
-        <div class="tc-role">Explainable AI</div>
-      </div>
-      <div class="tech-chip">
-        <div class="tc-name">Cloud Deployed</div>
-        <div class="tc-role">Live Accessible Link</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 6: DIFFERENTIATORS -->
-  <div class="slide" data-slide="5">
-    <div class="tag">Why SaveWaves</div>
-    <h1 style="font-size: 42px;">
-      Not Just Detection.<br><span class="accent italic">Intelligent Defense.</span>
-    </h1>
-    <div style="height: 12px;"></div>
-    <div class="features">
-      <div class="feature-row">
-        <div class="feature-marker"></div>
-        <div class="feature-text"><strong>Multi-Threat Coverage</strong> — Phishing emails, malicious URLs, and suspicious messages analyzed through one unified platform</div>
-      </div>
-      <div class="feature-row">
-        <div class="feature-marker"></div>
-        <div class="feature-text"><strong>Transparent AI</strong> — Every prediction comes with feature-level explanations via SHAP, so users see exactly what triggered the alert</div>
-      </div>
-      <div class="feature-row">
-        <div class="feature-marker"></div>
-        <div class="feature-text"><strong>Confidence-Aware Scoring</strong> — Risk levels from 0 to 100 with confidence intervals, not binary safe/unsafe labels</div>
-      </div>
-      <div class="feature-row">
-        <div class="feature-marker"></div>
-        <div class="feature-text"><strong>Actionable Recommendations</strong> — Block, quarantine, report, or investigate — tailored context-specific next steps</div>
-      </div>
-      <div class="feature-row">
-        <div class="feature-marker"></div>
-        <div class="feature-text"><strong>Built for Real Users</strong> — Visual explanations that non-technical employees and SOC analysts alike can act on</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 7: IMPACT -->
-  <div class="slide" data-slide="6">
-    <div class="tag">Real-World Impact</div>
-    <h1 style="font-size: 42px;">
-      Who <span class="accent italic">Benefits?</span>
-    </h1>
-    <div style="height: 16px;"></div>
-    <div class="impact-grid">
-      <div class="impact-card">
-        <div class="impact-badge b1">
-          <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3h-8l-2 4h12z"/></svg>
-        </div>
-        <div class="impact-title">Enterprises & SMBs</div>
-        <div class="impact-desc">Protect employees from phishing without a full SOC team. Reduce breach risk with explainable alerts.</div>
-      </div>
-      <div class="impact-card">
-        <div class="impact-badge b2">
-          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        </div>
-        <div class="impact-title">Security Operations</div>
-        <div class="impact-desc">Cut alert fatigue by 60%+ with confidence-scored, explained threats. Faster triage, better decisions.</div>
-      </div>
-      <div class="impact-card">
-        <div class="impact-badge b3">
-          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        </div>
-        <div class="impact-title">Everyday Users</div>
-        <div class="impact-desc">Non-technical users finally understand why something is suspicious. Empowerment through transparency.</div>
-      </div>
-    </div>
-    <div class="closing-statement">
-      SaveWaves turns <span class="hl-red">opaque security warnings</span> into
-      <span class="hl-purple">clear, actionable intelligence</span> —
-      making cybersecurity accessible to everyone.
-    </div>
-  </div>
-
-  <!-- 8: THANK YOU -->
-  <div class="slide" data-slide="7">
-    <div class="tag">Thank You</div>
-    <div class="final-heading">Thank You.</div>
-    <div class="subtitle" style="margin-bottom: 8px;">
-      Building a future where AI defends us — and explains why.
-    </div>
-    <div class="final-box">
-      <div class="fb-name">SaveWaves</div>
-      <div class="fb-sub">AI-Powered Cyber Threat Intelligence</div>
       <div class="pills">
         <div class="pill">Phishing Detection</div>
-        <div class="pill">URL Analysis</div>
+        <div class="pill">URL Intelligence</div>
+        <div class="pill">Prompt Injection Defense</div>
         <div class="pill">Explainable AI</div>
-        <div class="pill">Risk Scoring</div>
-        <div class="pill">Smart Defense</div>
       </div>
     </div>
-    <div class="event-line">
-      IndiaNext Hackathon 2026 &mdash; K.E.S. Shroff College, Mumbai
+
+    <!-- 2: THE PROBLEM -->
+    <div class="slide" data-slide="1">
+      <div class="tag">The Problem Is Already Here</div>
+      <h1 style="font-size: 44px;">
+        AI Has Broken<br><span class="accent italic">The Economics of Cybercrime</span>
+      </h1>
+      <div class="subtitle" style="margin-bottom: 48px;">
+        What used to take a skilled hacker weeks — crafting a phishing campaign, faking a domain, scripting a social engineering attack — now takes
+        <strong>30 seconds</strong> with a free LLM. Offense has AI. Defense is still using static rules from 2015.
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value rose">$25M</div>
+          <div class="stat-label">Stolen via a <strong>deepfake video call</strong> impersonating a CFO<br><span style="font-size:11px;opacity:0.55">CNN / The Guardian, Feb 2024</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value purple">₹1,087Cr</div>
+          <div class="stat-label"><strong>UPI fraud</strong> losses in India, FY 2023–24<br><span style="font-size:11px;opacity:0.55">RBI Annual Report, FY24</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value cyan">10×</div>
+          <div class="stat-label">Surge in <strong>cyber fraud cases</strong> in India over 5 years<br><span style="font-size:11px;opacity:0.55">RBI Data, 2019–2024</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value amber">91%</div>
+          <div class="stat-label">Of all cyberattacks begin with <strong>a phishing email</strong><br><span style="font-size:11px;opacity:0.55">Deloitte / Cofense Research</span></div>
+        </div>
+      </div>
     </div>
+
+    <!-- 3: THE GAP -->
+    <div class="slide" data-slide="2">
+      <div class="tag">Why Current Tools Fail</div>
+      <h1 style="font-size: 44px;">
+        Three Critical <span class="accent italic">Failures</span><br>in Today's Defenses
+      </h1>
+      <div style="height: 32px;"></div>
+      <div class="split">
+        <div class="split-panel danger">
+          <div class="panel-header danger">Today's Reality</div>
+          <ul class="panel-list">
+            <li><span class="marker">01</span><strong>Reactive, not adaptive.</strong> Signature-based detection only
+              catches known threats. AI-generated phishing is unique every time — there is no signature to match.</li>
+            <li><span class="marker">02</span><strong>Black-box outputs.</strong> A firewall blocks something and the user has no
+              idea why. 67% of security alerts go ignored because analysts can't manage the volume (Gartner).</li>
+            <li><span class="marker">03</span><strong>Blind to AI-native threats.</strong> Prompt injection,
+              AI-generated social engineering, adversarial inputs — these attack vectors didn't exist 3 years ago. No legacy tool
+              covers them.</li>
+          </ul>
+        </div>
+        <div class="split-panel success">
+          <div class="panel-header success">What SaveWaves Does</div>
+          <ul class="panel-list">
+            <li><span class="marker">+</span><strong>Adaptive AI detection</strong> that identifies novel, AI-generated
+              threats — not just known patterns</li>
+            <li><span class="marker">+</span><strong>Transparent verdicts</strong> — every alert explains what was flagged, why,
+              with a confidence score and recommended action</li>
+            <li><span class="marker">+</span><strong>Prompt injection defense</strong> — protecting AI chatbots and copilots against
+              OWASP's #1 LLM vulnerability. Almost nobody is building for this yet</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4: OUR SOLUTION -->
+    <div class="slide" data-slide="3">
+      <div class="tag">Our Solution</div>
+      <h1 style="font-size: 46px;">
+        <span class="accent">SaveWaves</span> — <span class="italic">See Through the Threat</span>
+      </h1>
+      <div class="subtitle">
+        An AI-powered multi-threat defense platform that doesn't just detect — it explains, scores, and recommends.
+      </div>
+      <div class="modules-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="module-card">
+          <div class="module-icon i1">
+            <svg viewBox="0 0 24 24">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="17 8 12 3 7 8" />
+              <line x1="12" y1="3" x2="12" y2="15" />
+            </svg>
+          </div>
+          <div class="module-title">Phishing & Social Engineering</div>
+          <div class="module-desc">Analyzes linguistic patterns, urgency manipulation, sender impersonation signals, and
+            AI-generated text fingerprints. <strong>91% of cyberattacks start here.</strong></div>
+        </div>
+        <div class="module-card">
+          <div class="module-icon i2">
+            <svg viewBox="0 0 24 24">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+            </svg>
+          </div>
+          <div class="module-title"> Malicious URL Intelligence</div>
+          <div class="module-desc">Real-time URL decomposition — domain age, TLD reputation, redirect chain analysis,
+            typosquatting detection, and lexical entropy scoring. <strong>A user clicks a link in 1.5 seconds. We analyze it in under 2.</strong></div>
+        </div>
+        <div class="module-card">
+          <div class="module-icon i3">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+          </div>
+          <div class="module-title"> Prompt Injection Detection</div>
+          <div class="module-desc">As organizations deploy AI chatbots and copilots, attackers craft inputs that hijack AI behavior — leaking data
+            and bypassing safety protocols. <strong>OWASP lists this as the #1 LLM vulnerability.</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5: ARCHITECTURE -->
+    <div class="slide" data-slide="4">
+      <div class="tag">Architecture</div>
+      <h1 style="font-size: 42px;">
+        System <span class="accent italic">Architecture</span>
+      </h1>
+      <div class="subtitle" style="margin-bottom: 44px;">
+        Modular pipeline — each component handles one responsibility.
+      </div>
+      <div class="arch-pipeline">
+        <div class="arch-step">
+          <div class="step-num">01</div>
+          <div class="step-name">Input Module</div>
+          <div class="step-detail">Email / URL / Text</div>
+        </div>
+        <div class="arch-connector"></div>
+        <div class="arch-step">
+          <div class="step-num">02</div>
+          <div class="step-name">Feature Extraction</div>
+          <div class="step-detail">NLP + URL Analysis</div>
+        </div>
+        <div class="arch-connector"></div>
+        <div class="arch-step">
+          <div class="step-num">03</div>
+          <div class="step-name">ML Detection</div>
+          <div class="step-detail">Classification Engine</div>
+        </div>
+        <div class="arch-connector"></div>
+        <div class="arch-step">
+          <div class="step-num">04</div>
+          <div class="step-name">Explainability</div>
+          <div class="step-detail">SHAP / LIME</div>
+        </div>
+        <div class="arch-connector"></div>
+        <div class="arch-step">
+          <div class="step-num">05</div>
+          <div class="step-name">Dashboard</div>
+          <div class="step-detail">Score + Actions</div>
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-chip">
+          <div class="tc-name">Python + FastAPI</div>
+          <div class="tc-role">Backend & ML Pipeline</div>
+        </div>
+        <div class="tech-chip">
+          <div class="tc-name">React + Vite</div>
+          <div class="tc-role">Interactive Dashboard</div>
+        </div>
+        <div class="tech-chip">
+          <div class="tc-name">scikit-learn / TF</div>
+          <div class="tc-role">ML Models</div>
+        </div>
+        <div class="tech-chip">
+          <div class="tc-name">SHAP / LIME</div>
+          <div class="tc-role">Explainable AI</div>
+        </div>
+        <div class="tech-chip">
+          <div class="tc-name">Cloud Deployed</div>
+          <div class="tc-role">Live Accessible Link</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6: DIFFERENTIATORS — EXPLAINABLE AI -->
+    <div class="slide" data-slide="5">
+      <div class="tag">Why SaveWaves</div>
+      <h1 style="font-size: 42px;">
+        Explainability Isn't a Feature.<br><span class="accent italic">It's the Foundation.</span>
+      </h1>
+      <div class="subtitle" style="margin-bottom: 20px;">Any model can output "malicious" or "safe." That's not useful. A security tool that can't explain itself is a tool nobody trusts.</div>
+      <div class="features">
+        <div class="feature-row">
+          <div class="feature-marker"></div>
+          <div class="feature-text"><strong>WHAT</strong> was flagged — Suspicious elements are highlighted directly in the input,
+            with visual evidence so users see exactly what triggered the alert</div>
+        </div>
+        <div class="feature-row">
+          <div class="feature-marker"></div>
+          <div class="feature-text"><strong>WHY</strong> it was flagged — Each alert comes with specific threat indicators and
+            detailed reasoning, not just a generic "spam detected" label</div>
+        </div>
+        <div class="feature-row">
+          <div class="feature-marker"></div>
+          <div class="feature-text"><strong>HOW CONFIDENT</strong> the system is — A probability score with reasoning, so
+            even on a false positive, users can make an informed decision instead of blindly trusting or ignoring</div>
+        </div>
+        <div class="feature-row">
+          <div class="feature-marker"></div>
+          <div class="feature-text"><strong>WHAT TO DO</strong> next — Context-aware, actionable recommendations tailored to the threat
+            — not generic "be careful" warnings, but real steps: block, report, quarantine</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7: IMPACT -->
+    <div class="slide" data-slide="6">
+      <div class="tag">Real-World Impact</div>
+      <h1 style="font-size: 42px;">
+        Who Does This <span class="accent italic">Serve?</span>
+      </h1>
+      <div style="height: 16px;"></div>
+      <div class="impact-grid">
+        <div class="impact-card">
+          <div class="impact-badge b1">
+            <svg viewBox="0 0 24 24">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+          </div>
+          <div class="impact-title">The Everyday Person</div>
+          <div class="impact-desc">Your mother gets a "KYC expired" SMS with a suspicious link. SaveWaves scans it, shows her the fake
+            domain, explains why it's phishing, and suggests she block the number and report to her bank. <strong>She doesn't need to be a security expert.</strong></div>
+        </div>
+        <div class="impact-card">
+          <div class="impact-badge b2">
+            <svg viewBox="0 0 24 24">
+              <rect x="2" y="7" width="20" height="14" rx="2" />
+              <path d="M16 3h-8l-2 4h12z" />
+            </svg>
+          </div>
+          <div class="impact-title">The IT Admin at an Indian SME</div>
+          <div class="impact-desc">Only 13% of Indian SMEs have a formal cybersecurity policy (NASSCOM). SaveWaves gives them an
+            intelligent dashboard — threat alerts, risk scores, and incident logs — <strong>without needing a ₹50 lakh enterprise
+              security suite.</strong></div>
+        </div>
+        <div class="impact-card">
+          <div class="impact-badge b3">
+            <svg viewBox="0 0 24 24">
+              <polyline points="16 18 22 12 16 6" />
+              <polyline points="8 6 2 12 8 18" />
+            </svg>
+          </div>
+          <div class="impact-title">The AI Developer</div>
+          <div class="impact-desc">Building a chatbot for your company? SaveWaves protects it from prompt injection attacks that
+            could leak customer data or hijack your model's behavior. <strong>This defense barely exists in the market
+              today.</strong></div>
+        </div>
+      </div>
+      <div class="closing-statement">
+        We're not building for Fortune 500 SOC teams. We're building for the
+        <span class="hl-purple">millions in India who currently have no AI-powered defense.</span>
+      </div>
+    </div>
+
+    <!-- 8: THANK YOU -->
+    <div class="slide" data-slide="7">
+      <div class="tag">Outthink the Algorithm</div>
+      <div class="final-heading">Thank You.</div>
+      <div class="subtitle" style="margin-bottom: 8px;">
+        The hackathon tagline says "Outthink the Algorithm." That's exactly what attackers are doing.<br>
+        SaveWaves fights AI with AI. We detect. We explain. We defend.
+      </div>
+      <div class="final-box">
+        <div class="fb-name">SaveWaves</div>
+        <div class="fb-sub">AI-Powered Multi-Threat Defense Platform</div>
+        <div class="pills">
+          <div class="pill">Phishing Detection</div>
+          <div class="pill">URL Intelligence</div>
+          <div class="pill">Prompt Injection Defense</div>
+          <div class="pill">Explainable AI</div>
+        </div>
+      </div>
+      <div class="event-line">
+        IndiaNext Hackathon 2026 &mdash; K.E.S. Shroff College, Mumbai
+      </div>
+    </div>
+
   </div>
 
-</div>
+  <!-- NAV -->
+  <div class="nav-bar" id="navBar"></div>
+  <div class="hint">
+    <kbd>&larr;</kbd> <kbd>&rarr;</kbd> to navigate
+  </div>
 
-<!-- NAV -->
-<div class="nav-bar" id="navBar"></div>
-<div class="hint">
-  <kbd>&larr;</kbd> <kbd>&rarr;</kbd> to navigate
-</div>
+  <script>
+    // === SLIDE NAVIGATION ===
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    let currentIndex = 0;
+    let isAnimating = false;
 
-<script>
-// === SLIDE NAVIGATION ===
-const slides = document.querySelectorAll('.slide');
-const totalSlides = slides.length;
-let currentIndex = 0;
-let isAnimating = false;
+    document.getElementById('totalSlides').textContent = String(totalSlides).padStart(2, '0');
 
-document.getElementById('totalSlides').textContent = String(totalSlides).padStart(2, '0');
+    const navBar = document.getElementById('navBar');
+    for (let i = 0; i < totalSlides; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+      dot.addEventListener('click', () => goToSlide(i));
+      navBar.appendChild(dot);
+    }
 
-const navBar = document.getElementById('navBar');
-for (let i = 0; i < totalSlides; i++) {
-  const dot = document.createElement('div');
-  dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
-  dot.addEventListener('click', () => goToSlide(i));
-  navBar.appendChild(dot);
-}
+    function goToSlide(index) {
+      if (isAnimating || index === currentIndex || index < 0 || index >= totalSlides) return;
+      isAnimating = true;
 
-function goToSlide(index) {
-  if (isAnimating || index === currentIndex || index < 0 || index >= totalSlides) return;
-  isAnimating = true;
+      slides[currentIndex].classList.remove('active');
+      currentIndex = index;
+      slides[currentIndex].classList.add('active');
 
-  slides[currentIndex].classList.remove('active');
-  currentIndex = index;
-  slides[currentIndex].classList.add('active');
+      document.querySelectorAll('.nav-dot').forEach((d, i) => {
+        d.classList.toggle('active', i === currentIndex);
+      });
 
-  document.querySelectorAll('.nav-dot').forEach((d, i) => {
-    d.classList.toggle('active', i === currentIndex);
-  });
+      document.getElementById('currentSlide').textContent = String(currentIndex + 1).padStart(2, '0');
 
-  document.getElementById('currentSlide').textContent = String(currentIndex + 1).padStart(2, '0');
+      setTimeout(() => { isAnimating = false; }, 700);
+    }
 
-  setTimeout(() => { isAnimating = false; }, 700);
-}
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault();
+        goToSlide(currentIndex + 1);
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        goToSlide(currentIndex - 1);
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        goToSlide(0);
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        goToSlide(totalSlides - 1);
+      }
+    });
 
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'ArrowRight' || e.key === ' ') {
-    e.preventDefault();
-    goToSlide(currentIndex + 1);
-  } else if (e.key === 'ArrowLeft') {
-    e.preventDefault();
-    goToSlide(currentIndex - 1);
-  } else if (e.key === 'Home') {
-    e.preventDefault();
-    goToSlide(0);
-  } else if (e.key === 'End') {
-    e.preventDefault();
-    goToSlide(totalSlides - 1);
-  }
-});
-
-let touchStartX = 0;
-document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
-document.addEventListener('touchend', e => {
-  const diff = touchStartX - e.changedTouches[0].clientX;
-  if (Math.abs(diff) > 50) goToSlide(currentIndex + (diff > 0 ? 1 : -1));
-});
-</script>
+    let touchStartX = 0;
+    document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+    document.addEventListener('touchend', e => {
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) goToSlide(currentIndex + (diff > 0 ? 1 : -1));
+    });
+  </script>
 </body>
+
 </html>
