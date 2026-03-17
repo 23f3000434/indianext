@@ -1,0 +1,641 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 980" width="1500" height="980">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#08060f" />
+      <stop offset="50%" style="stop-color:#0d0a1c" />
+      <stop offset="100%" style="stop-color:#06040d" />
+    </linearGradient>
+    <linearGradient id="purpleBox" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#a882ff;stop-opacity:0.18" />
+      <stop offset="100%" style="stop-color:#a882ff;stop-opacity:0.05" />
+    </linearGradient>
+    <linearGradient id="cyanBox" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:0.18" />
+      <stop offset="100%" style="stop-color:#00d4ff;stop-opacity:0.05" />
+    </linearGradient>
+    <linearGradient id="pipeBox" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#a882ff;stop-opacity:0.12" />
+      <stop offset="100%" style="stop-color:#00d4ff;stop-opacity:0.08" />
+    </linearGradient>
+    <linearGradient id="titleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#a882ff" />
+      <stop offset="45%" style="stop-color:#c4a8ff" />
+      <stop offset="100%" style="stop-color:#00d4ff" />
+    </linearGradient>
+    <linearGradient id="arrowH" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#a882ff;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#00d4ff;stop-opacity:0.8" />
+    </linearGradient>
+    <linearGradient id="arrowV" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#a882ff;stop-opacity:0.6" />
+      <stop offset="100%" style="stop-color:#6366f1;stop-opacity:0.6" />
+    </linearGradient>
+    <linearGradient id="moduleGrad1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#a882ff;stop-opacity:0.22" />
+      <stop offset="100%" style="stop-color:#a882ff;stop-opacity:0.06" />
+    </linearGradient>
+    <linearGradient id="moduleGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:0.22" />
+      <stop offset="100%" style="stop-color:#6366f1;stop-opacity:0.06" />
+    </linearGradient>
+    <linearGradient id="moduleGrad3" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#22d3ee;stop-opacity:0.22" />
+      <stop offset="100%" style="stop-color:#22d3ee;stop-opacity:0.06" />
+    </linearGradient>
+    <linearGradient id="moduleGrad4" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f472b6;stop-opacity:0.22" />
+      <stop offset="100%" style="stop-color:#f472b6;stop-opacity:0.06" />
+    </linearGradient>
+    <linearGradient id="moduleGrad5" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:0.22" />
+      <stop offset="100%" style="stop-color:#fbbf24;stop-opacity:0.06" />
+    </linearGradient>
+    <linearGradient id="moduleGrad6" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#34d399;stop-opacity:0.22" />
+      <stop offset="100%" style="stop-color:#34d399;stop-opacity:0.06" />
+    </linearGradient>
+    <linearGradient id="infraGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#a882ff;stop-opacity:0.12" />
+      <stop offset="100%" style="stop-color:#00d4ff;stop-opacity:0.12" />
+    </linearGradient>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a882ff" />
+      <stop offset="100%" stop-color="#00d4ff" />
+    </linearGradient>
+    <linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#c4a8ff" />
+      <stop offset="100%" stop-color="#7aeaff" />
+    </linearGradient>
+
+    <filter id="glowP" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2.5" result="blur" />
+      <feFlood flood-color="#a882ff" flood-opacity="0.25" />
+      <feComposite in2="blur" operator="in" />
+      <feMerge>
+        <feMergeNode />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter id="glowC" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2.5" result="blur" />
+      <feFlood flood-color="#00d4ff" flood-opacity="0.25" />
+      <feComposite in2="blur" operator="in" />
+      <feMerge>
+        <feMergeNode />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter id="titleGlow" x="-5%" y="-20%" width="110%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feFlood flood-color="#a882ff" flood-opacity="0.35" />
+      <feComposite in2="blur" operator="in" />
+      <feMerge>
+        <feMergeNode />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <marker id="ap" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#a882ff" opacity="0.9" />
+    </marker>
+    <marker id="ac" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#00d4ff" opacity="0.9" />
+    </marker>
+    <marker id="am" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#c4a8ff" opacity="0.7" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1500" height="980" fill="url(#bgGrad)" />
+
+  <!-- Subtle grid -->
+  <g opacity="0.025" stroke="#a882ff" stroke-width="0.5">
+    <line x1="0" y1="60" x2="1500" y2="60" />
+    <line x1="0" y1="120" x2="1500" y2="120" />
+    <line x1="0" y1="180" x2="1500" y2="180" />
+    <line x1="0" y1="240" x2="1500" y2="240" />
+    <line x1="0" y1="300" x2="1500" y2="300" />
+    <line x1="0" y1="360" x2="1500" y2="360" />
+    <line x1="0" y1="420" x2="1500" y2="420" />
+    <line x1="0" y1="480" x2="1500" y2="480" />
+    <line x1="0" y1="540" x2="1500" y2="540" />
+    <line x1="0" y1="600" x2="1500" y2="600" />
+    <line x1="0" y1="660" x2="1500" y2="660" />
+    <line x1="0" y1="720" x2="1500" y2="720" />
+    <line x1="0" y1="780" x2="1500" y2="780" />
+    <line x1="0" y1="840" x2="1500" y2="840" />
+    <line x1="0" y1="900" x2="1500" y2="900" />
+    <line x1="60" y1="0" x2="60" y2="980" />
+    <line x1="120" y1="0" x2="120" y2="980" />
+    <line x1="180" y1="0" x2="180" y2="980" />
+    <line x1="240" y1="0" x2="240" y2="980" />
+    <line x1="300" y1="0" x2="300" y2="980" />
+    <line x1="360" y1="0" x2="360" y2="980" />
+    <line x1="420" y1="0" x2="420" y2="980" />
+    <line x1="480" y1="0" x2="480" y2="980" />
+    <line x1="540" y1="0" x2="540" y2="980" />
+    <line x1="600" y1="0" x2="600" y2="980" />
+    <line x1="660" y1="0" x2="660" y2="980" />
+    <line x1="720" y1="0" x2="720" y2="980" />
+    <line x1="780" y1="0" x2="780" y2="980" />
+    <line x1="840" y1="0" x2="840" y2="980" />
+    <line x1="900" y1="0" x2="900" y2="980" />
+    <line x1="960" y1="0" x2="960" y2="980" />
+    <line x1="1020" y1="0" x2="1020" y2="980" />
+    <line x1="1080" y1="0" x2="1080" y2="980" />
+    <line x1="1140" y1="0" x2="1140" y2="980" />
+    <line x1="1200" y1="0" x2="1200" y2="980" />
+    <line x1="1260" y1="0" x2="1260" y2="980" />
+    <line x1="1320" y1="0" x2="1320" y2="980" />
+    <line x1="1380" y1="0" x2="1380" y2="980" />
+    <line x1="1440" y1="0" x2="1440" y2="980" />
+  </g>
+
+  <!-- Corner accents -->
+  <line x1="20" y1="60" x2="20" y2="20" stroke="#a882ff" stroke-width="1.5" opacity="0.4" />
+  <line x1="20" y1="20" x2="60" y2="20" stroke="#a882ff" stroke-width="1.5" opacity="0.4" />
+  <line x1="1480" y1="60" x2="1480" y2="20" stroke="#00d4ff" stroke-width="1.5" opacity="0.4" />
+  <line x1="1480" y1="20" x2="1440" y2="20" stroke="#00d4ff" stroke-width="1.5" opacity="0.4" />
+  <line x1="20" y1="920" x2="20" y2="960" stroke="#a882ff" stroke-width="1.5" opacity="0.4" />
+  <line x1="20" y1="960" x2="60" y2="960" stroke="#a882ff" stroke-width="1.5" opacity="0.4" />
+  <line x1="1480" y1="920" x2="1480" y2="960" stroke="#00d4ff" stroke-width="1.5" opacity="0.4" />
+  <line x1="1480" y1="960" x2="1440" y2="960" stroke="#00d4ff" stroke-width="1.5" opacity="0.4" />
+
+  <!-- === TITLE === -->
+  <!-- Logo mark -->
+  <svg x="690" y="14" viewBox="0 0 40 40" width="28" height="28" fill="none">
+    <path d="M20 3L6 9v9c0 8.5 6 16.2 14 18 8-1.8 14-9.5 14-18V9L20 3z" stroke="url(#shieldGrad)" stroke-width="2"
+      fill="none" stroke-linejoin="round" />
+    <path d="M11 16c2-3 4-3 6 0s4 3 6 0s4 3 6 0" stroke="url(#waveGrad)" stroke-width="1.8" fill="none"
+      stroke-linecap="round" />
+    <path d="M11 21c2-3 4-3 6 0s4 3 6 0s4 3 6 0" stroke="url(#waveGrad)" stroke-width="1.8" fill="none"
+      stroke-linecap="round" opacity="0.6" />
+  </svg>
+  <text x="750" y="36" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="22"
+    font-weight="800" fill="url(#titleGrad)" filter="url(#titleGlow)" letter-spacing="4">SAFEWAVES — PLATFORM
+    ARCHITECTURE</text>
+  <line x1="200" y1="50" x2="1300" y2="50" stroke="url(#arrowH)" stroke-width="0.8" opacity="0.35" />
+
+  <!-- === ZONE LABELS === -->
+  <text x="118" y="74" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="9"
+    fill="#a882ff" opacity="0.8" letter-spacing="2.5" font-weight="700">CLIENT INPUTS</text>
+  <text x="720" y="74" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="9"
+    fill="#a882ff" opacity="0.8" letter-spacing="2.5" font-weight="700">BACKEND PROCESSING PIPELINE (FastAPI · Python
+    3.12)</text>
+  <text x="1378" y="74" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="9"
+    fill="#00d4ff" opacity="0.8" letter-spacing="2.5" font-weight="700">REACT FRONTEND</text>
+
+  <!-- === LEFT ZONE — INPUT LAYER === -->
+  <rect x="20" y="82" width="196" height="710" rx="12" fill="url(#purpleBox)" stroke="#a882ff" stroke-width="0.8"
+    opacity="0.5" />
+
+  <!-- Input 1: Email -->
+  <rect x="32" y="100" width="172" height="52" rx="8" fill="#0d0a1c" stroke="#a882ff" stroke-width="1.2"
+    filter="url(#glowP)" />
+  <rect x="36" y="108" width="3" height="36" rx="1.5" fill="#a882ff" opacity="0.7" />
+  <text x="48" y="122" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8" fill="#a882ff"
+    opacity="0.55" letter-spacing="1">01 EMAIL</text>
+  <text x="48" y="138" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" fill="#f0eef5"
+    font-weight="600">Email Text + Subject</text>
+
+  <!-- Input 2: URL -->
+  <rect x="32" y="164" width="172" height="52" rx="8" fill="#0d0a1c" stroke="#a882ff" stroke-width="1.2"
+    filter="url(#glowP)" />
+  <rect x="36" y="172" width="3" height="36" rx="1.5" fill="#6366f1" opacity="0.7" />
+  <text x="48" y="186" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8" fill="#6366f1" opacity="0.7"
+    letter-spacing="1">02 URL</text>
+  <text x="48" y="202" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" fill="#f0eef5"
+    font-weight="600">URL String</text>
+
+  <!-- Input 3: Media -->
+  <rect x="32" y="228" width="172" height="52" rx="8" fill="#0d0a1c" stroke="#22d3ee" stroke-width="1.2"
+    filter="url(#glowC)" />
+  <rect x="36" y="236" width="3" height="36" rx="1.5" fill="#22d3ee" opacity="0.7" />
+  <text x="48" y="250" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8" fill="#22d3ee" opacity="0.7"
+    letter-spacing="1">03 MEDIA</text>
+  <text x="48" y="266" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" fill="#f0eef5"
+    font-weight="600">Image / Video / Audio</text>
+
+  <!-- Input 4: Prompt -->
+  <rect x="32" y="292" width="172" height="52" rx="8" fill="#0d0a1c" stroke="#f472b6" stroke-width="1.2" />
+  <rect x="36" y="300" width="3" height="36" rx="1.5" fill="#f472b6" opacity="0.7" />
+  <text x="48" y="314" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8" fill="#f472b6" opacity="0.7"
+    letter-spacing="1">04 PROMPT</text>
+  <text x="48" y="330" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" fill="#f0eef5"
+    font-weight="600">Prompt / LLM Input</text>
+
+  <!-- Input 5: Login Events -->
+  <rect x="32" y="356" width="172" height="52" rx="8" fill="#0d0a1c" stroke="#fbbf24" stroke-width="1.2" />
+  <rect x="36" y="364" width="3" height="36" rx="1.5" fill="#fbbf24" opacity="0.7" />
+  <text x="48" y="378" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8" fill="#fbbf24" opacity="0.7"
+    letter-spacing="1">05 BEHAVIOR</text>
+  <text x="48" y="394" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" fill="#f0eef5"
+    font-weight="600">Login Event History</text>
+
+  <!-- Input 6: AI Text -->
+  <rect x="32" y="420" width="172" height="52" rx="8" fill="#0d0a1c" stroke="#34d399" stroke-width="1.2" />
+  <rect x="36" y="428" width="3" height="36" rx="1.5" fill="#34d399" opacity="0.7" />
+  <text x="48" y="442" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8" fill="#34d399" opacity="0.7"
+    letter-spacing="1">06 AI TEXT</text>
+  <text x="48" y="458" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" fill="#f0eef5"
+    font-weight="600">Text Content</text>
+
+  <!-- Pydantic/Axios label -->
+  <text x="118" y="504" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5"
+    fill="#a882ff" opacity="0.5">via Axios + Pydantic v2</text>
+
+  <!-- === ARROWS: Inputs → API Gateway === -->
+  <line x1="204" y1="126" x2="286" y2="133" stroke="#a882ff" stroke-width="1.2" opacity="0.55" marker-end="url(#ap)" />
+  <line x1="204" y1="190" x2="286" y2="145" stroke="#a882ff" stroke-width="1.2" opacity="0.5" marker-end="url(#ap)" />
+  <line x1="204" y1="254" x2="286" y2="157" stroke="#22d3ee" stroke-width="1.2" opacity="0.45" marker-end="url(#ac)" />
+  <line x1="204" y1="318" x2="286" y2="166" stroke="#f472b6" stroke-width="1.2" opacity="0.4" marker-end="url(#am)" />
+  <line x1="204" y1="382" x2="286" y2="172" stroke="#fbbf24" stroke-width="1.2" opacity="0.35" marker-end="url(#am)" />
+  <line x1="204" y1="446" x2="286" y2="178" stroke="#34d399" stroke-width="1.2" opacity="0.3" marker-end="url(#am)" />
+
+  <!-- === CENTER ZONE — BACKEND PIPELINE === -->
+  <rect x="234" y="82" width="1008" height="710" rx="12" fill="url(#pipeBox)" stroke="#a882ff" stroke-width="0.6"
+    opacity="0.35" />
+
+  <!-- Stage 1: API Gateway -->
+  <rect x="280" y="96" width="916" height="58" rx="10" fill="#0d0a1c" stroke="#a882ff" stroke-width="1.5"
+    filter="url(#glowP)" />
+  <circle cx="306" cy="125" r="13" fill="none" stroke="#a882ff" stroke-width="1.2" opacity="0.7" />
+  <text x="306" y="129" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="10"
+    fill="#a882ff" font-weight="700">1</text>
+  <text x="330" y="118" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#ffffff"
+    font-weight="700">API Gateway</text>
+  <text x="330" y="135" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="10" fill="#a882ff"
+    opacity="0.75">FastAPI Router · CORS Middleware · Rate Limiter (60 req/min, sliding window) · Pydantic Schema
+    Validation</text>
+
+  <!-- Arrow down -->
+  <line x1="738" y1="154" x2="738" y2="172" stroke="#a882ff" stroke-width="1.8" opacity="0.55" marker-end="url(#ap)" />
+
+  <!-- Stage 2: Feature Extraction -->
+  <rect x="280" y="174" width="916" height="58" rx="10" fill="#0d0a1c" stroke="#a882ff" stroke-width="1.5"
+    filter="url(#glowP)" />
+  <circle cx="306" cy="203" r="13" fill="none" stroke="#a882ff" stroke-width="1.2" opacity="0.7" />
+  <text x="306" y="207" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="10"
+    fill="#a882ff" font-weight="700">2</text>
+  <text x="330" y="196" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#ffffff"
+    font-weight="700">Feature Extraction <tspan font-size="9" fill="#a882ff" opacity="0.6" font-weight="400">—
+      per-module specialised engineering</tspan></text>
+  <text x="330" y="214" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="10" fill="#a882ff"
+    opacity="0.75">NLP Heuristics · Shannon Entropy · Levenshtein Edit Distance · ELA Image Analysis · Structural /
+    Statistical Features</text>
+
+  <!-- Arrow down -->
+  <line x1="738" y1="232" x2="738" y2="250" stroke="#a882ff" stroke-width="1.8" opacity="0.55" marker-end="url(#ap)" />
+
+  <!-- Stage 3: ML Detection Engine (taller box with 6 module pills) -->
+  <rect x="280" y="252" width="916" height="118" rx="10" fill="#0d0a1c" stroke="#a882ff" stroke-width="1.6"
+    filter="url(#glowP)" />
+  <circle cx="306" cy="278" r="13" fill="none" stroke="#a882ff" stroke-width="1.2" opacity="0.7" />
+  <text x="306" y="282" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="10"
+    fill="#a882ff" font-weight="700">3</text>
+  <text x="330" y="271" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#ffffff"
+    font-weight="700">ML Detection Engine <tspan font-size="9" fill="#a882ff" opacity="0.6" font-weight="400">— 6
+      independent specialist modules</tspan></text>
+  <text x="330" y="288" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" fill="#a882ff"
+    opacity="0.65">Scikit-learn trained pipelines (phishing, URL) + custom heuristic estimators (deepfake, prompt,
+    behavior, AI content)</text>
+
+  <!-- Module pill 1: Phishing -->
+  <rect x="292" y="300" width="138" height="58" rx="7" fill="url(#moduleGrad1)" stroke="#a882ff" stroke-width="1" />
+  <text x="361" y="320" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="11"
+    fill="#c4a8ff" font-weight="700">Phishing Email</text>
+  <text x="361" y="336" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5"
+    fill="#a882ff" opacity="0.65">11 features</text>
+  <text x="361" y="350" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8"
+    fill="#a09bb5" opacity="0.75">NLP + sklearn model</text>
+
+  <!-- Module pill 2: URL -->
+  <rect x="440" y="300" width="138" height="58" rx="7" fill="url(#moduleGrad2)" stroke="#6366f1" stroke-width="1" />
+  <text x="509" y="320" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="11"
+    fill="#818cf8" font-weight="700">URL Scanner</text>
+  <text x="509" y="336" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5"
+    fill="#6366f1" opacity="0.85">18 features</text>
+  <text x="509" y="350" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8"
+    fill="#a09bb5" opacity="0.75">Lexical + entropy + sklearn</text>
+
+  <!-- Module pill 3: Deepfake -->
+  <rect x="588" y="300" width="138" height="58" rx="7" fill="url(#moduleGrad3)" stroke="#22d3ee" stroke-width="1" />
+  <text x="657" y="320" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="11"
+    fill="#67e8f9" font-weight="700">Deepfake Media</text>
+  <text x="657" y="336" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5"
+    fill="#22d3ee" opacity="0.85">8 features</text>
+  <text x="657" y="350" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8"
+    fill="#a09bb5" opacity="0.75">ELA + Laplacian + Sobel</text>
+
+  <!-- Module pill 4: Prompt Injection -->
+  <rect x="736" y="300" width="138" height="58" rx="7" fill="url(#moduleGrad4)" stroke="#f472b6" stroke-width="1" />
+  <text x="805" y="320" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="11"
+    fill="#f9a8d4" font-weight="700">Prompt Injection</text>
+  <text x="805" y="336" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5"
+    fill="#f472b6" opacity="0.85">10 features</text>
+  <text x="805" y="350" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8"
+    fill="#a09bb5" opacity="0.75">Regex · 7 attack categories</text>
+
+  <!-- Module pill 5: Behavior -->
+  <rect x="884" y="300" width="138" height="58" rx="7" fill="url(#moduleGrad5)" stroke="#fbbf24" stroke-width="1" />
+  <text x="953" y="320" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="11"
+    fill="#fde68a" font-weight="700">Behavior Anomaly</text>
+  <text x="953" y="336" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5"
+    fill="#fbbf24" opacity="0.85">8 features</text>
+  <text x="953" y="350" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8"
+    fill="#a09bb5" opacity="0.75">Travel · TOR · Rapid-fire</text>
+
+  <!-- Module pill 6: AI Content -->
+  <rect x="1032" y="300" width="138" height="58" rx="7" fill="url(#moduleGrad6)" stroke="#34d399" stroke-width="1" />
+  <text x="1101" y="320" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="11"
+    fill="#6ee7b7" font-weight="700">AI Content</text>
+  <text x="1101" y="336" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5"
+    fill="#34d399" opacity="0.85">10 features</text>
+  <text x="1101" y="350" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8"
+    fill="#a09bb5" opacity="0.75">Burstiness · Perplexity</text>
+
+  <!-- Arrow down -->
+  <line x1="738" y1="370" x2="738" y2="390" stroke="#a882ff" stroke-width="1.8" opacity="0.55" marker-end="url(#ap)" />
+
+  <!-- Stage 4: Explainability Layer -->
+  <rect x="280" y="392" width="916" height="72" rx="10" fill="#0d0a1c" stroke="#a882ff" stroke-width="1.5"
+    filter="url(#glowP)" />
+  <circle cx="306" cy="428" r="13" fill="none" stroke="#a882ff" stroke-width="1.2" opacity="0.7" />
+  <text x="306" y="432" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="10"
+    fill="#a882ff" font-weight="700">4</text>
+  <text x="330" y="416" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#ffffff"
+    font-weight="700">Explainability Layer <tspan font-size="9" fill="#a882ff" opacity="0.6" font-weight="400">—
+      three-layer transparent AI</tspan></text>
+
+  <!-- Explainability sub-chips -->
+  <rect x="330" y="427" width="190" height="28" rx="5" fill="#a882ff" fill-opacity="0.1" stroke="#a882ff"
+    stroke-width="0.8" />
+  <text x="425" y="446" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="10"
+    fill="#c4a8ff" font-weight="600">SHAP-Style Attribution</text>
+  <text x="425" y="456" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="7.5"
+    fill="#a882ff" opacity="0.65">Top-5 feature contributions per prediction</text>
+
+  <rect x="530" y="427" width="190" height="28" rx="5" fill="#a882ff" fill-opacity="0.1" stroke="#a882ff"
+    stroke-width="0.8" />
+  <text x="625" y="446" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="10"
+    fill="#c4a8ff" font-weight="600">Gemini 3 Flash (NL)</text>
+  <text x="625" y="456" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="7.5"
+    fill="#a882ff" opacity="0.65">Plain-English threat explanations</text>
+
+  <rect x="730" y="427" width="190" height="28" rx="5" fill="#a882ff" fill-opacity="0.1" stroke="#a882ff"
+    stroke-width="0.8" />
+  <text x="825" y="446" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="10"
+    fill="#c4a8ff" font-weight="600">Key Factors Report</text>
+  <text x="825" y="456" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="7.5"
+    fill="#a882ff" opacity="0.65">Impact · Direction · Description</text>
+
+  <!-- Fallback note -->
+  <text x="958" y="438" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8" fill="#6b6580"
+    font-style="italic">full local fallback</text>
+  <text x="958" y="449" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8" fill="#6b6580"
+    font-style="italic">when API unavailable</text>
+
+  <!-- Arrow down -->
+  <line x1="738" y1="464" x2="738" y2="482" stroke="#6366f1" stroke-width="1.8" opacity="0.55" marker-end="url(#ap)" />
+
+  <!-- Stage 5: Risk Scoring -->
+  <rect x="280" y="484" width="916" height="58" rx="10" fill="#0d0a1c" stroke="#6366f1" stroke-width="1.5"
+    filter="url(#glowP)" />
+  <circle cx="306" cy="513" r="13" fill="none" stroke="#6366f1" stroke-width="1.2" opacity="0.7" />
+  <text x="306" y="517" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="10"
+    fill="#6366f1" font-weight="700">5</text>
+  <text x="330" y="506" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#ffffff"
+    font-weight="700">Risk Scoring + Confidence Estimation</text>
+  <text x="330" y="524" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="10" fill="#818cf8"
+    opacity="0.8">Score 0–100 · Safe / Low / Medium / High / Critical · Confidence via: score extremity + feature signal
+    + ambiguity penalty</text>
+
+  <!-- Arrow down -->
+  <line x1="738" y1="542" x2="738" y2="560" stroke="#6366f1" stroke-width="1.8" opacity="0.55" marker-end="url(#ap)" />
+
+  <!-- Stage 6: Recommendation Engine -->
+  <rect x="280" y="562" width="916" height="58" rx="10" fill="#0d0a1c" stroke="#00d4ff" stroke-width="1.5"
+    filter="url(#glowC)" />
+  <circle cx="306" cy="591" r="13" fill="none" stroke="#00d4ff" stroke-width="1.2" opacity="0.7" />
+  <text x="306" y="595" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="10"
+    fill="#00d4ff" font-weight="700">6</text>
+  <text x="330" y="584" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#ffffff"
+    font-weight="700">Recommendation Engine</text>
+  <text x="330" y="602" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="10" fill="#00d4ff"
+    opacity="0.8">5–6 context-aware actions per threat type · Priority: Immediate / High / Medium / Low · Severity
+    escalation logic</text>
+
+  <!-- Arrow down -->
+  <line x1="738" y1="620" x2="738" y2="638" stroke="#00d4ff" stroke-width="1.8" opacity="0.55" marker-end="url(#ac)" />
+
+  <!-- Stage 7: Threat Fusion -->
+  <rect x="280" y="640" width="916" height="58" rx="10" fill="#0d0a1c" stroke="#00d4ff" stroke-width="1.5"
+    filter="url(#glowC)" />
+  <circle cx="306" cy="669" r="13" fill="none" stroke="#00d4ff" stroke-width="1.2" opacity="0.7" />
+  <text x="306" y="673" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="10"
+    fill="#00d4ff" font-weight="700">7</text>
+  <text x="330" y="662" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#ffffff"
+    font-weight="700">Threat Fusion <tspan font-size="9" fill="#00d4ff" opacity="0.6" font-weight="400">POST
+      /threat-fusion</tspan></text>
+  <text x="330" y="680" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="10" fill="#00d4ff"
+    opacity="0.8">Cross-module signal correlation · Unified compound risk score · Multi-vector attack detection</text>
+
+  <!-- Arrow down -->
+  <line x1="738" y1="698" x2="738" y2="716" stroke="#00d4ff" stroke-width="1.8" opacity="0.55" marker-end="url(#ac)" />
+
+  <!-- Stage 8: Storage + SSE Stream -->
+  <rect x="280" y="718" width="916" height="62" rx="10" fill="#0d0a1c" stroke="#00d4ff" stroke-width="1.5"
+    filter="url(#glowC)" />
+  <circle cx="306" cy="749" r="13" fill="none" stroke="#00d4ff" stroke-width="1.2" opacity="0.7" />
+  <text x="306" y="753" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="10"
+    fill="#00d4ff" font-weight="700">8</text>
+  <text x="330" y="742" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#ffffff"
+    font-weight="700">Persistent Store &amp; Real-time Stream</text>
+
+  <rect x="330" y="753" width="148" height="20" rx="4" fill="#00d4ff" fill-opacity="0.08" stroke="#00d4ff"
+    stroke-width="0.7" />
+  <text x="404" y="767" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5"
+    fill="#67e8f9">SQLite Database</text>
+
+  <rect x="488" y="753" width="148" height="20" rx="4" fill="#00d4ff" fill-opacity="0.08" stroke="#00d4ff"
+    stroke-width="0.7" />
+  <text x="562" y="767" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5"
+    fill="#67e8f9">In-Memory Deque (100)</text>
+
+  <rect x="646" y="753" width="148" height="20" rx="4" fill="#00d4ff" fill-opacity="0.08" stroke="#00d4ff"
+    stroke-width="0.7" />
+  <text x="720" y="767" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5"
+    fill="#67e8f9">SSE Event Stream</text>
+
+  <!-- Adversarial loop: branching from stage 3 -->
+  <rect x="280" y="806" width="916" height="48" rx="10" fill="#0d0a1c" stroke="#f472b6" stroke-width="1.2" />
+  <circle cx="306" cy="830" r="13" fill="none" stroke="#f472b6" stroke-width="1.2" opacity="0.7" />
+  <text x="306" y="834" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="9"
+    fill="#f472b6" font-weight="700">★</text>
+  <text x="330" y="823" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#ffffff"
+    font-weight="700">Adversarial Testing Engine <tspan font-size="9" fill="#f472b6" opacity="0.7" font-weight="400">
+      BONUS — robustness validation</tspan></text>
+  <text x="330" y="840" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="10" fill="#f9a8d4"
+    opacity="0.8">Transforms inputs (obfuscation · encoding tricks · legitimacy padding) · Re-runs detection · Compares
+    original vs adversarial scores</text>
+  <!-- Arrow from stage 3 to adversarial box -->
+  <path d="M738 370 Q738 800 800 806" stroke="#f472b6" stroke-width="1" fill="none" opacity="0.25"
+    stroke-dasharray="5,4" marker-end="url(#am)" />
+
+  <!-- === ARROWS: Backend → Frontend === -->
+  <!-- SSE arrow to Threat Feed -->
+  <line x1="1196" y1="749" x2="1268" y2="580" stroke="#00d4ff" stroke-width="1.5" opacity="0.4" stroke-dasharray="6,3"
+    marker-end="url(#ac)" />
+  <!-- Results to Analysis Interface -->
+  <line x1="1196" y1="591" x2="1268" y2="400" stroke="#00d4ff" stroke-width="1.5" opacity="0.4" marker-end="url(#ac)" />
+  <!-- Scores to Dashboard -->
+  <line x1="1196" y1="513" x2="1268" y2="236" stroke="#6366f1" stroke-width="1.3" opacity="0.35"
+    marker-end="url(#am)" />
+  <!-- Adversarial to Adversarial Lab -->
+  <line x1="1196" y1="830" x2="1268" y2="766" stroke="#f472b6" stroke-width="1.3" opacity="0.35"
+    marker-end="url(#am)" />
+  <!-- Recommendations to Explainability -->
+  <line x1="1196" y1="669" x2="1268" y2="580" stroke="#a882ff" stroke-width="1.1" opacity="0.3" marker-end="url(#ap)" />
+
+  <!-- === RIGHT ZONE — FRONTEND === -->
+  <rect x="1256" y="82" width="224" height="710" rx="12" fill="url(#cyanBox)" stroke="#00d4ff" stroke-width="0.8"
+    opacity="0.5" />
+
+  <!-- Page 1: Landing -->
+  <rect x="1268" y="96" width="200" height="72" rx="8" fill="#0d0a1c" stroke="#00d4ff" stroke-width="1.2"
+    filter="url(#glowC)" />
+  <rect x="1272" y="104" width="3" height="56" rx="1.5" fill="#00d4ff" opacity="0.5" />
+  <text x="1286" y="118" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#ffffff"
+    font-weight="700">Landing Page</text>
+  <text x="1286" y="133" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5" fill="#00d4ff"
+    opacity="0.65">Hero · Module Cards</text>
+  <text x="1286" y="147" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5" fill="#00d4ff"
+    opacity="0.65">Feature Overview</text>
+  <text x="1286" y="161" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5" fill="#00d4ff"
+    opacity="0.65">Video Background</text>
+
+  <!-- Page 2: Dashboard -->
+  <rect x="1268" y="188" width="200" height="72" rx="8" fill="#0d0a1c" stroke="#00d4ff" stroke-width="1.2"
+    filter="url(#glowC)" />
+  <rect x="1272" y="196" width="3" height="56" rx="1.5" fill="#00d4ff" opacity="0.5" />
+  <text x="1286" y="210" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#ffffff"
+    font-weight="700">Dashboard</text>
+  <text x="1286" y="225" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5" fill="#00d4ff"
+    opacity="0.65">Stats Cards · Risk Gauges</text>
+  <text x="1286" y="239" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5" fill="#00d4ff"
+    opacity="0.65">Threat History</text>
+  <text x="1286" y="253" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5" fill="#00d4ff"
+    opacity="0.65">Zustand Global Store</text>
+
+  <!-- Page 3: Analyze -->
+  <rect x="1268" y="280" width="200" height="90" rx="8" fill="#0d0a1c" stroke="#00d4ff" stroke-width="1.2"
+    filter="url(#glowC)" />
+  <rect x="1272" y="288" width="3" height="74" rx="1.5" fill="#00d4ff" opacity="0.5" />
+  <text x="1286" y="302" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#ffffff"
+    font-weight="700">Analyze (6 Tabs)</text>
+  <text x="1286" y="317" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5" fill="#00d4ff"
+    opacity="0.65">Input forms per module</text>
+  <text x="1286" y="331" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5" fill="#00d4ff"
+    opacity="0.65">SHAP Visualization</text>
+  <text x="1286" y="345" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5" fill="#00d4ff"
+    opacity="0.65">Confidence Meter</text>
+  <text x="1286" y="359" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5" fill="#00d4ff"
+    opacity="0.65">Recommendations Panel</text>
+
+  <!-- Page 4: Threat Feed -->
+  <rect x="1268" y="390" width="200" height="72" rx="8" fill="#0d0a1c" stroke="#00d4ff" stroke-width="1.2"
+    filter="url(#glowC)" />
+  <rect x="1272" y="398" width="3" height="56" rx="1.5" fill="#a882ff" opacity="0.5" />
+  <text x="1286" y="412" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#ffffff"
+    font-weight="700">Threat Feed</text>
+  <text x="1286" y="427" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5" fill="#a882ff"
+    opacity="0.65">SSE · Real-time Events</text>
+  <text x="1286" y="441" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5" fill="#a882ff"
+    opacity="0.65">Filter by type / severity</text>
+  <text x="1286" y="455" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5" fill="#a882ff"
+    opacity="0.65">Expandable cards</text>
+
+  <!-- Page 5: Adversarial Lab -->
+  <rect x="1268" y="486" width="200" height="72" rx="8" fill="#0d0a1c" stroke="#f472b6" stroke-width="1.2" />
+  <rect x="1272" y="494" width="3" height="56" rx="1.5" fill="#f472b6" opacity="0.5" />
+  <text x="1286" y="508" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#ffffff"
+    font-weight="700">Adversarial Lab</text>
+  <text x="1286" y="523" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5" fill="#f472b6"
+    opacity="0.75">Side-by-side comparison</text>
+  <text x="1286" y="537" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5" fill="#f472b6"
+    opacity="0.75">Original vs Adversarial</text>
+  <text x="1286" y="551" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5" fill="#f472b6"
+    opacity="0.75">Robust / Vulnerable badge</text>
+
+  <!-- Shared Components note -->
+  <rect x="1268" y="580" width="200" height="90" rx="8" fill="#0d0a1c" stroke="#a882ff" stroke-width="1"
+    opacity="0.7" />
+  <text x="1368" y="598" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="10"
+    fill="#a882ff" font-weight="700" opacity="0.85">Shared Components</text>
+  <text x="1368" y="614" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5"
+    fill="#a09bb5">RiskGauge · SeverityBadge</text>
+  <text x="1368" y="628" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5"
+    fill="#a09bb5">ConfidenceMeter · GlassCard</text>
+  <text x="1368" y="642" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5"
+    fill="#a09bb5">SHAP Visualization</text>
+  <text x="1368" y="656" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5"
+    fill="#a09bb5">Framer Motion transitions</text>
+
+  <!-- Frontend tech label -->
+  <text x="1368" y="708" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8"
+    fill="#00d4ff" opacity="0.5">React 19 · Vite 7 · Tailwind v4</text>
+  <text x="1368" y="720" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8"
+    fill="#00d4ff" opacity="0.5">Zustand · Axios · React Router 7</text>
+
+  <!-- === INFRASTRUCTURE STRIP === -->
+  <rect x="20" y="870" width="1460" height="82" rx="12" fill="url(#infraGrad)" stroke="#a882ff" stroke-width="0.7"
+    opacity="0.55" />
+  <text x="750" y="892" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="9"
+    fill="#ffffff" opacity="0.5" letter-spacing="3" font-weight="700">INFRASTRUCTURE &amp; DEPLOYMENT</text>
+
+  <rect x="50" y="900" width="200" height="38" rx="7" fill="#0d0a1c" stroke="#a882ff" stroke-width="0.9" />
+  <text x="150" y="917" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="11"
+    fill="#a882ff" font-weight="600">Rate Limiter</text>
+  <text x="150" y="931" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5"
+    fill="#6b6580">60 req/min · sliding window</text>
+
+  <rect x="270" y="900" width="200" height="38" rx="7" fill="#0d0a1c" stroke="#a882ff" stroke-width="0.9" />
+  <text x="370" y="917" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="11"
+    fill="#a882ff" font-weight="600">CORS Middleware</text>
+  <text x="370" y="931" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5"
+    fill="#6b6580">Vercel + localhost origins</text>
+
+  <rect x="490" y="900" width="200" height="38" rx="7" fill="#0d0a1c" stroke="#a882ff" stroke-width="0.9" />
+  <text x="590" y="917" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="11"
+    fill="#a882ff" font-weight="600">Pydantic v2 Schemas</text>
+  <text x="590" y="931" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5"
+    fill="#6b6580">Unified request/response models</text>
+
+  <rect x="710" y="900" width="200" height="38" rx="7" fill="#0d0a1c" stroke="#6366f1" stroke-width="0.9" />
+  <text x="810" y="917" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="11"
+    fill="#818cf8" font-weight="600">SQLite Persistence</text>
+  <text x="810" y="931" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5"
+    fill="#6b6580">Threat history + audit trail</text>
+
+  <rect x="930" y="900" width="250" height="38" rx="7" fill="#0d0a1c" stroke="#00d4ff" stroke-width="0.9" />
+  <text x="1055" y="917" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="11"
+    fill="#00d4ff" font-weight="600">Render Cloud (Backend)</text>
+  <text x="1055" y="931" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5"
+    fill="#6b6580">safewaves-api.onrender.com</text>
+
+  <rect x="1200" y="900" width="250" height="38" rx="7" fill="#0d0a1c" stroke="#00d4ff" stroke-width="0.9" />
+  <text x="1325" y="917" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="11"
+    fill="#00d4ff" font-weight="600">Vercel (Frontend)</text>
+  <text x="1325" y="931" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5"
+    fill="#6b6580">safewaves.vercel.app</text>
+
+  <!-- Vertical decorative flow line -->
+  <line x1="255" y1="125" x2="255" y2="749" stroke="url(#arrowV)" stroke-width="1.5" opacity="0.12" />
+  <circle cx="255" cy="125" r="2.5" fill="#a882ff" opacity="0.4" />
+  <circle cx="255" cy="749" r="2.5" fill="#00d4ff" opacity="0.4" />
+
+  <!-- Data flow labels -->
+  <text x="245" y="490" text-anchor="middle" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="7"
+    fill="#a882ff" opacity="0.35" letter-spacing="1" transform="rotate(-90, 245, 490)">DATA FLOW</text>
+</svg>

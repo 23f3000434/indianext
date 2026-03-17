@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+scikit-learn
+xgboost
+shap
+pandas
+numpy
+joblib
+pydantic
+python-multipart
+pillow
+opencv-python-headless
+google-generativeai
+python-dotenv
+requests
+aiohttp
